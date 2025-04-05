@@ -23,7 +23,7 @@ namespace HospitalManagementSystem.Application.Services
         public Task AddAppointmentAsync(AppointmentModel appointment)
         {
             // Step 1: Save appointment Data
-            var appoinmentDetails = new Appointment
+            var appointmentDetails = new Appointment
             {
                 PatientId = appointment.PatientId,
                 DoctorId = appointment.DoctorId,
