@@ -24,7 +24,7 @@ namespace HospitalManagementSystem.API.Controller
         [HttpGet]
         public IEnumerable<Appointment> Get()
         {
-            return _unitOfWork.Appointments.GetAllAsync().Result.Where(t => t.AppointmentDateTime == DateTime.Today);
+            return _unitOfWork.Appointments.GetAllAsync().Result.Where(t => t.AppointmentDateTime.Date == DateTime.Today.Date);
         }
 
         // GET api/<AppointmentController>/5
