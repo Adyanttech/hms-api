@@ -1,0 +1,33 @@
+﻿# Ignore Visual Studio temporary files, build results, and
+# other unnecessary directories or files
+
+# Build results
+/bin/
+/obj/
+
+# Visual Studio files
+.vs/
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Lock files
+*.lock
+Source/HMS/.vscode/
+bin
+obj
+packages
+
