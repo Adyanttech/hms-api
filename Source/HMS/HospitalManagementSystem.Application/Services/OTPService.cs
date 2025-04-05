@@ -57,7 +57,7 @@ namespace HospitalManagementSystem.Application.Services
             {
                 Console.WriteLine($"Twilio API error: {ex.Message}");
             }
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         private OTPModel GetOTP(string phoneNumber) 
