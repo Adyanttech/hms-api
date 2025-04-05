@@ -2,8 +2,9 @@
 # other unnecessary directories or files
 
 # Build results
-/bin/
-/obj/
+bin
+obj
+packages
 
 # Visual Studio files
 .vs/
@@ -26,8 +27,5 @@ desktop.ini
 
 # Lock files
 *.lock
-Source/HMS/.vscode/
-bin
-obj
-packages
+
 
