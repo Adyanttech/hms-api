@@ -30,7 +30,7 @@ namespace HospitalManagementSystem.Application.Services
                 AppointmentDateTime = appointment.AppointmentDate,
                 AppointmentType = appointment.AppointmentType,
             };
-            _unitOfWork.Appointments.AddAsync(appoinmentDetails);
+            _unitOfWork.Appointments.AddAsync(appointmentDetails);
 
             // Step 2: Payment Service
 
