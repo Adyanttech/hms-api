@@ -6,6 +6,7 @@ WORKDIR /app
 COPY *.sln .
 COPY HospitalManagementSystem.API/*.csproj ./HospitalManagementSystem.API/
 COPY HospitalManagementSystem.Application/*.csproj ./HospitalManagementSystem.Application/
+COPY HospitalManagementSystem.Core/*.csproj ./HospitalManagementSystem.Core/
 COPY HospitalManagementSystem.Infrastructure/*.csproj ./HospitalManagementSystem.Infrastructure/
 
 # Restore dependencies
