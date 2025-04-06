@@ -25,6 +25,9 @@ WORKDIR /app
 # Copy the published output from the build stage
 COPY --from=build /out .
 
+# Set the environment variable to bind to all interfaces
+ENV ASPNETCORE_URLS=http://0.0.0.0:80
+
 # Expose the port the application runs on
 EXPOSE 80
 EXPOSE 443
