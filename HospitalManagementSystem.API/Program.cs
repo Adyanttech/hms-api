@@ -46,6 +46,16 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseCors(builder => builder
+    .WithOrigins("https://hms.adyanttech.com")
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
+app.UseCors(builder => builder
+    .WithOrigins("http://hms.adyanttech.com")
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
 //app.UseEndpoints(endpoints =>
 //{
 //    endpoints.MapControllers();
