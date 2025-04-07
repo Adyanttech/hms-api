@@ -1,6 +1,6 @@
 ﻿using HospitalManagementSystem.Application.Interfaces;
 using HospitalManagementSystem.Core.Entities;
-using HospitalManagementSystem.Infrastructure.Context;
+using HospitalManagementSystem.Infrastructure.Models;
 using HospitalManagementSystem.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +24,7 @@ namespace HospitalManagementSystem.API.Controller
         [HttpGet]
         public IEnumerable<Appointment> Get()
         {
-            return _unitOfWork.Appointments.GetAllAsync().Result.Where(t => t.AppointmentDateTime?.Date == DateTime.Today);
+            return _unitOfWork.Appointments.GetAllAsync().Result.Where(t => t.AppointmentDatetime?.Date == DateTime.Today);
         }
 
         // GET api/<AppointmentController>/5

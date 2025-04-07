@@ -1,5 +1,5 @@
 ﻿using HospitalManagementSystem.Core.Entities;
-using HospitalManagementSystem.Infrastructure.Context;
+using HospitalManagementSystem.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

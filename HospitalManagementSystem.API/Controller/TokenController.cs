@@ -35,10 +35,10 @@ namespace HospitalManagementSystem.API.Controller
         public void put(int tokenId)
         {
             var token = _unitOfWork.Tokens.GetByIdAsync(tokenId).Result;
-            if (token != null && !token.IsServed)
+            if (token != null && !token.Isserved)
             {
-                token.IsServed = true;
-                token.ServedAt = DateTime.Now;
+                token.Isserved = true;
+                token.Servedat = DateTime.Now;
                 _unitOfWork.CompleteAsync();
             }
         }

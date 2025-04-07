@@ -1,5 +1,6 @@
-﻿using HospitalManagementSystem.Infrastructure.Context;
+﻿using HospitalManagementSystem.Infrastructure.Models;
 using HospitalManagementSystem.Infrastructure.Interfaces;
+using HospitalManagementSystem.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace HospitalManagementSystem.Infrastructure.Data
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly HospitalDbContext _context;
-        public BaseRepository(HospitalDbContext context)
+        private readonly HmsDbContext _context;
+        public BaseRepository(HmsDbContext context)
         {
             _context = context;
         }

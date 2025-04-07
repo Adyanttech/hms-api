@@ -1,6 +1,6 @@
 ﻿using HospitalManagementSystem.Application.Interfaces;
 using HospitalManagementSystem.Core.Entities;
-using HospitalManagementSystem.Infrastructure.Context;
+using HospitalManagementSystem.Infrastructure.Models;
 using HospitalManagementSystem.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace HospitalManagementSystem.Application.Services
             var patientDetails = new Patient()
             {
                 PatientName = patient.Name,
-                PatientFatherName = patient.FatherName,
+                //PatientFatherName = patient.FatherName,
                 DateOfBirth = DateOnly.FromDateTime(patient.DateOfBirth),
                 Gender = patient.Gender,
                 Address = patient.Address
@@ -43,7 +43,7 @@ namespace HospitalManagementSystem.Application.Services
             var patientDetails = new Patient()
             {
                 PatientName = patient.Name,
-                PatientFatherName = patient.FatherName,
+                //PatientFatherName = patient.FatherName,
                 DateOfBirth = DateOnly.FromDateTime(patient.DateOfBirth),
                 Gender = patient.Gender,
                 ContactNumber = patient.ContactNumber,

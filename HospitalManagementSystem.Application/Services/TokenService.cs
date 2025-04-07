@@ -1,7 +1,7 @@
 ﻿using HospitalManagementSystem.Application.Interfaces;
 using HospitalManagementSystem.Core.Entities;
-using HospitalManagementSystem.Infrastructure.Context;
 using HospitalManagementSystem.Infrastructure.Interfaces;
+using HospitalManagementSystem.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,23 +37,23 @@ namespace HospitalManagementSystem.Application.Services
 
             // Filter tokens based on the session
             var lastTokenForSession = _unitOfWork.Tokens.GetAllAsync().Result
-                .Where(t => t.GeneratedAt.Date == today &&
-                           ((isMorningSession && t.GeneratedAt >= morningStartTime && t.GeneratedAt < morningEndTime) ||
-                            (isEveningSession && t.GeneratedAt >= eveningStartTime && t.GeneratedAt < eveningEndTime)))
-                .OrderByDescending(t => t.TokenNumber)
+                .Where(t => t.Generatedat == today &&
+                           ((isMorningSession && t.Generatedat >= morningStartTime && t.Generatedat < morningEndTime) ||
+                            (isEveningSession && t.Generatedat >= eveningStartTime && t.Generatedat < eveningEndTime)))
+                .OrderByDescending(t => t.Tokennumber)
                 .FirstOrDefault();
 
             // Determine the next token number for the session
             int nextTokenNumber = (lastTokenForSession != null)
-                ? lastTokenForSession.TokenNumber + 1
+                ? lastTokenForSession.Tokennumber + 1
                 : 1;
 
             var token = new Token
             {
-                AppointmentId = appointmentId,
-                TokenNumber = nextTokenNumber,
-                GeneratedAt = DateTime.Now,
-                IsServed = false,
+                Appointmentid= appointmentId,
+                Tokennumber = nextTokenNumber,
+                Generatedat = DateTime.Now,
+                Isserved = false,
             };
 
             await _unitOfWork.Tokens.AddAsync(token);
@@ -64,18 +64,18 @@ namespace HospitalManagementSystem.Application.Services
 
         public async Task<LiveTokenStatus> GetLiveTokenStatus()
         {
-            var currentToken = _unitOfWork.Tokens.GetAllAsync().Result.FirstOrDefault(t => t.IsServed == false);
+            var currentToken = _unitOfWork.Tokens.GetAllAsync().Result.FirstOrDefault(t => t.Isserved == false);
             var upcomingTokens = _unitOfWork.Tokens.GetAllAsync().Result
-                                         .Where(t => t.IsServed == false)
-                                         .OrderBy(t => t.TokenNumber)
+                                         .Where(t => t.Isserved == false)
+                                         .OrderBy(t => t.Tokennumber)
                                          .Skip(1)
                                          .Take(5)
-                                         .Select(t => t.TokenNumber)
+                                         .Select(t => t.Tokennumber)
                                          .ToList();
 
             return new LiveTokenStatus
             {
-                CurrentToken = currentToken?.TokenNumber ?? 0
+                CurrentToken = currentToken?.Tokennumber ?? 0
             };
         }
     }
