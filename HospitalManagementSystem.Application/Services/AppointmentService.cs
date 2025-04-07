@@ -1,8 +1,8 @@
 ﻿using HospitalManagementSystem.Application.Interfaces;
 using HospitalManagementSystem.Core.Entities;
 using HospitalManagementSystem.Core.Enums;
-using HospitalManagementSystem.Infrastructure.Context;
 using HospitalManagementSystem.Infrastructure.Interfaces;
+using HospitalManagementSystem.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace HospitalManagementSystem.Application.Services
             {
                 PatientId = appointment.PatientId,
                 DoctorId = appointment.DoctorId,
-                AppointmentDateTime = appointment.AppointmentDate,
+                AppointmentDatetime = appointment.AppointmentDate,
                 AppointmentType = appointment.AppointmentType,
             };
             _unitOfWork.Appointments.AddAsync(appointmentDetails);

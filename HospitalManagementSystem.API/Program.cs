@@ -1,9 +1,10 @@
 using HospitalManagementSystem.Application.Interfaces;
 using HospitalManagementSystem.Application.Services;
-using HospitalManagementSystem.Infrastructure.Context;
+using HospitalManagementSystem.Infrastructure.Models;
 using HospitalManagementSystem.Infrastructure.Data;
 using HospitalManagementSystem.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using HospitalManagementSystem.Application.AutoMapper;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -11,8 +12,8 @@ var builder = WebApplication.CreateBuilder();
 builder.Services.AddControllers();
 
 // Registering ApplicationDbContext
-builder.Services.AddDbContext<HospitalDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<HmsDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("SupabaseConnection")));
 
 // Registering repositories
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -24,7 +25,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddTransient<IDocumentService, DocumentService>();
 builder.Services.AddTransient<IOTPService, OTPService>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 // Add Swagger and CORS
 builder.Services.AddEndpointsApiExplorer();

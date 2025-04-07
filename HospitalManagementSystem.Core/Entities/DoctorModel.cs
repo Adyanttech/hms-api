@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalManagementSystem.Core.Entities
 {
-    public class Doctor
+    public class DoctorModel
     {
         public int Id { get; set; }
         public string? Name { get; set; }

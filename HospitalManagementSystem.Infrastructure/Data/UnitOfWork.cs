@@ -1,5 +1,5 @@
-﻿using HospitalManagementSystem.Infrastructure.Context;
-using HospitalManagementSystem.Infrastructure.Interfaces;
+﻿using HospitalManagementSystem.Infrastructure.Interfaces;
+using HospitalManagementSystem.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,12 @@ namespace HospitalManagementSystem.Infrastructure.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly Context.HospitalDbContext _context;
+        private readonly HmsDbContext _context;
         private BaseRepository<Patient> _patients;
         private BaseRepository<Doctor> _doctors;
         private BaseRepository<Appointment> _appointments;
         private BaseRepository<Token> _tokens;
-        public UnitOfWork(Context.HospitalDbContext context)
+        public UnitOfWork(HmsDbContext context)
         {
             _context = context;
         }

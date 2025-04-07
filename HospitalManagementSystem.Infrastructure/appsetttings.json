@@ -1,0 +1,5 @@
+{
+    "ConnectionStrings": {
+        "SupabaseConnection": "User Id=postgres.dmjtdtbsnvpadwyvegwf;Password=2?%ftmwUW.QM!_q;Server=aws-0-ap-south-1.pooler.supabase.com;Port=5432;Database=postgres"
+    }
+}

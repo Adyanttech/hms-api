@@ -1,6 +1,6 @@
 ﻿using HospitalManagementSystem.Application.Interfaces;
 using HospitalManagementSystem.Core.Entities;
-using HospitalManagementSystem.Infrastructure.Context;
+using HospitalManagementSystem.Infrastructure.Models;
 using HospitalManagementSystem.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
