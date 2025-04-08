@@ -219,9 +219,24 @@ public partial class HmsDbContext : DbContext
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("now()");
             entity.Property(e => e.UpdatedAt).HasDefaultValueSql("now()");
 
-            entity.HasOne(d => d.Hospital).WithMany(p => p.Users).HasConstraintName("fk_users_hospital");
-
-            entity.HasOne(d => d.Role).WithMany(p => p.Users).HasConstraintName("fk_users_role");
+            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Userrolesmap",
+                    r => r.HasOne<Role>().WithMany()
+                        .HasForeignKey("Roleid")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("userrolesmap_roleid_fkey"),
+                    l => l.HasOne<User>().WithMany()
+                        .HasForeignKey("Userid")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("userrolesmap_userid_fkey"),
+                    j =>
+                    {
+                        j.HasKey("Userid", "Roleid").HasName("userrolesmap_pkey");
+                        j.ToTable("userrolesmap");
+                        j.IndexerProperty<Guid>("Userid").HasColumnName("userid");
+                        j.IndexerProperty<Guid>("Roleid").HasColumnName("roleid");
+                    });
         });
 
         OnModelCreatingPartial(modelBuilder);

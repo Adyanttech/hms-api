@@ -10,7 +10,6 @@ namespace HospitalManagementSystem.Core.Entities
     public class LoginModel
     {
         public required string UserName { get; set; }
-        public required string Password { get; set; } // or OTP if you're using OTP-based login
-        public UserRoles Role { get; set; } // "Patient", "Doctor", etc.
+        public required string Password { get; set; }  // or OTP if you're using OTP-based login
     }
 }

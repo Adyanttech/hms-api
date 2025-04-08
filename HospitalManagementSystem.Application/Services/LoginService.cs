@@ -17,42 +17,36 @@ namespace HospitalManagementSystem.Application.Services
         }
         public async Task<string> LoginAsync(LoginModel model)
         {
-            switch (model.Role)
-            {
-                case UserRoles.SuperAdmin:
-                    return await ValidateLoginAsync(model.UserName, model.Password, UserRoles.SuperAdmin);
-                case UserRoles.Admin:
-                    return await ValidateLoginAsync(model.UserName, model.Password, UserRoles.Admin);
-                case UserRoles.Patient:
-                    return await ValidateLoginAsync(model.UserName, model.Password, UserRoles.Patient);
-                case UserRoles.Doctor:
-                    return await ValidateLoginAsync(model.UserName, model.Password, UserRoles.Doctor);
-                case UserRoles.Pharmacist:
-                    //return await ValidatePharmacistAsync(request.UserName, request.Password);
-                case UserRoles.LabTechnician:
-                case UserRoles.SupportStaff:
-                   // return await ValidateAdminAsync(request.UserName, request.Password);
-                default:
-                    throw new Exception("Invalid User");
-            }
+            if(model == null) throw new ArgumentNullException(nameof(model));
+            return await ValidateLoginAsync(model);
         }
 
-        private async Task<string> ValidateLoginAsync(string userName, string password, UserRoles role)
+        private async Task<string> ValidateLoginAsync(LoginModel model)
         {
-            dynamic? user;
-
-            // Simple check to see if it's an email
-            if (userName.Contains("@") && userName.Contains("."))
+            User? user;
+            if (!string.IsNullOrEmpty(model.UserName) && !string.IsNullOrEmpty(model.Password))
             {
-                user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToString().ToLowerInvariant().Equals(userName.ToString().ToLowerInvariant(), StringComparison.InvariantCultureIgnoreCase));
+                // Simple check to see if it's an email
+                if (model.UserName.Contains("@") && model.UserName.Contains("."))
+                {
+                    user = await _context.Users
+                          .Include(u => u.Roles)
+                          .FirstOrDefaultAsync(u => u.Email.ToLower() == model.UserName.ToLower());
+                }
+                else
+                {
+                    user = await _context.Users
+                            .Include(u => u.Roles)
+                            .FirstOrDefaultAsync(u => u.Phonenumber == model.UserName);
+                }
+                bool isPasswordVerified = _passwordHasher.VerifyPassword(model.Password, user.Passwordhash);
+                if (isPasswordVerified)
+                {
+                    var roleNames = user.Roles.Select(r => r.Name).ToList();
+                    string roles = string.Join(", ", roleNames);
+                    return roles;
+                }
             }
-            else
-            {
-                user = await _context.Users.FirstOrDefaultAsync(u => u.Phonenumber.ToString() == userName.ToString());
-            }
-            bool isPasswordVerified = _passwordHasher.VerifyPassword(password, user.Passwordhash);
-            if (user != null && isPasswordVerified) // simulate OTP or password match
-                return "Login Successful";
             return "Invalid credentials";
         }
         
