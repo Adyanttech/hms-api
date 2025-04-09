@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HospitalManagementSystem.Application.Interfaces;
+using HospitalManagementSystem.Core.Entities.DTO;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,18 +10,16 @@ namespace HospitalManagementSystem.API.Controller
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        // GET: api/<DoctorController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IDoctorService _doctorService;
+        public DoctorController (IDoctorService doctorService) 
         {
-            return new string[] { "value1", "value2" };
+            _doctorService = doctorService;
         }
-
-        // GET api/<DoctorController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/<DoctorController>
+        [HttpGet("doctorAppointments")]
+        public async Task<List<DoctorAppointmentsDTO>>Get(int doctorId)
         {
-            return "value";
+          return await _doctorService.GetDoctorAppointments(doctorId);
         }
 
         // POST api/<DoctorController>

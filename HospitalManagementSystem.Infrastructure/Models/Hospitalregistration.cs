@@ -79,7 +79,4 @@ public partial class Hospitalregistration
     [ForeignKey("ParentHospitalId")]
     [InverseProperty("InverseParentHospital")]
     public virtual Hospitalregistration? ParentHospital { get; set; }
-
-    [InverseProperty("Hospital")]
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

@@ -1,5 +1,6 @@
 ﻿using HospitalManagementSystem.Application.Interfaces;
 using HospitalManagementSystem.Core.Entities;
+using HospitalManagementSystem.Core.Enums;
 using HospitalManagementSystem.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,8 @@ namespace HospitalManagementSystem.Application.Services
         public async Task<string> RegisterAsync(RegisterModel request)
         {
             // Check if user already exists
-            var userExists = await _context.Users.AnyAsync(u => u.Email == request.Email);
+            string? userRole = string.Empty;
+            var userExists = await _context.Users.AnyAsync(u => u.Email == request.Email || u.Phonenumber == request.PhoneNumber);
             if (userExists) return "User already exists.";
             if (request != null)
             {
@@ -27,15 +29,29 @@ namespace HospitalManagementSystem.Application.Services
                     Name = request.Name,
                     Email = request.Email,
                     Phonenumber = request.PhoneNumber,
-                    Passwordhash = _passwordHasher.HashPassword(request.PasswordHash),
-                    CreatedAt = DateTime.Now
+                    Passwordhash = _passwordHasher.HashPassword(request.PasswordHash)
                 };
-                _context.Users.Add(user);
-            }
-            
-            await _context.SaveChangesAsync();
 
-            return "User registered successfully";
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                userRole = request.UserRole == null ? UserRoles.Patient.ToString() : request.UserRole.ToString();
+
+                var role = await _context.Roles
+                           .Where(r => r.Name != null && r.Name.ToLower() == userRole!.ToLower())
+                           .FirstOrDefaultAsync();
+
+                // Add entry in userrolesmap (many-to-many bridge table)
+                var roleObj = await _context.Roles.FindAsync(role?.Id);
+
+                if (roleObj != null)
+                {
+                    user.Roles.Add(roleObj);
+                    await _context.SaveChangesAsync();
+                }
+                return "User registered successfully";
+            }
+            return "Invalid User";
         }
     }
 }

@@ -31,17 +31,7 @@ public partial class User
     [Column("updated_at")]
     public DateTime? UpdatedAt { get; set; }
 
-    [Column("hospital_id")]
-    public int? HospitalId { get; set; }
-
-    [Column("roleid")]
-    public Guid? Roleid { get; set; }
-
-    [ForeignKey("HospitalId")]
+    [ForeignKey("Userid")]
     [InverseProperty("Users")]
-    public virtual Hospitalregistration? Hospital { get; set; }
-
-    [ForeignKey("Roleid")]
-    [InverseProperty("Users")]
-    public virtual Role? Role { get; set; }
+    public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
 }

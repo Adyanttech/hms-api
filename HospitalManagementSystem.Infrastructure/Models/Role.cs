@@ -22,6 +22,7 @@ public partial class Role
     [Column("updated_at")]
     public DateTime? UpdatedAt { get; set; }
 
-    [InverseProperty("Role")]
+    [ForeignKey("Roleid")]
+    [InverseProperty("Roles")]
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }
